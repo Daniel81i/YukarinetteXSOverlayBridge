@@ -1,0 +1,76 @@
+{
+  "app_name": "YukarinetteXSOverlayBridge",
+  "xso_endpoint": "ws://127.0.0.1:42070",
+  "Yncneo_Registry_Hive": "HKEY_CURRENT_USER",
+  "Yncneo_Registry_Path": "Software\\YukarinetteConnectorNeo",
+  "Yncneo_Registry_Value_Http": "HTTP",
+  "Yncneo_Registry_Value_Websocket": "WebSocket",
+  "FLUSH_INTERVAL_SEC": 5,
+  "PROCESS_STABLE_SEC": 10,
+  "WS_RECONNECT_DELAY_SEC": 5,
+  "WS_MAX_RECONNECT_SEC": 60,
+  "TARGET_PROCESS": "YNC_Neo.exe",
+  "translation_profiles": [
+    {
+      "name": "JP->English(US)",
+      "recognition_language": "ja",
+      "xso_notification": false,
+      "translation_param": {
+        "slot": 1,
+        "language": "en-US",
+        "engine": "microsoft"
+      }
+    },
+    {
+      "name": "JP->繁体字",
+      "recognition_language": "ja",
+      "xso_notification": false,
+      "translation_param": {
+        "slot": 1,
+        "language": "zh-TW",
+        "engine": "google"
+      }
+    },
+    {
+      "name": "JP->Português",
+      "recognition_language": "ja",
+      "xso_notification": false,
+      "translation_param": {
+        "slot": 1,
+        "language": "p-PT",
+        "engine": "google"
+      }
+    },
+    {
+      "name": "JP->Suomi(Finland)",
+      "recognition_language": "ja",
+      "xso_notification": false,
+      "translation_param": {
+        "slot": 1,
+        "language": "fi-FI",
+        "engine": "google"
+      }
+    },
+    {
+      "name": "JP->韓国語",
+      "recognition_language": "ja",
+      "xso_notification": false,
+      "translation_param": {
+        "slot": 1,
+        "language": "ko-KR",
+        "engine": "google"
+      }
+    },
+    {
+      "name": "JP->English(US)Google",
+      "recognition_language": "ja",
+      "xso_notification": true,
+      "translation_param": {
+        "slot": 1,
+        "language": "en-US",
+        "engine": "google"
+      }
+    }
+  ],
+  "debug": false
+}
