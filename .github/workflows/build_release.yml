@@ -35,7 +35,6 @@ jobs:
             --name YukarinetteXSOverlayBridge `
             --icon icon.ico `
             --add-data "icon.ico;." `
-            --add-data "assets/YukarinetteXSOverlayBridge.png;assets" `
             main.py
 
       - name: Package release zip (EXE + config.json + icon.ico)
@@ -46,7 +45,6 @@ jobs:
 
           Copy-Item "dist/YukarinetteXSOverlayBridge.exe" $pkg/
           Copy-Item "config.json" $pkg/
-          Copy-Item "icon.ico" $pkg/ -ErrorAction SilentlyContinue
           if (Test-Path "assets") { Copy-Item "assets" "$pkg/assets" -Recurse }
 
           $zipName = "YukarinetteXSOverlayBridge-${{ github.ref_name }}-windows.zip"
