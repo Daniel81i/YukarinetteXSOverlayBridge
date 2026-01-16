@@ -1,0 +1,58 @@
+name: Build and Release (Windows)
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build EXE with PyInstaller
+        run: |
+          pyinstaller ^
+            --onefile ^
+            --noconsole ^
+            --name YukarinetteXSOverlayBridge ^
+            --icon icon.ico ^
+            --add-data "icon.ico;." ^
+            --add-data "assets/YukarinetteXSOverlayBridge.png;assets" ^
+            main.py
+
+      - name: Package release zip (EXE + config.json + icon.ico)
+        shell: pwsh
+        run: |
+          $pkg = "release_pkg"
+          New-Item -ItemType Directory -Force -Path $pkg | Out-Null
+
+          Copy-Item "dist/YukarinetteXSOverlayBridge.exe" $pkg/
+          Copy-Item "config.json" $pkg/
+          Copy-Item "icon.ico" $pkg/ -ErrorAction SilentlyContinue
+          if (Test-Path "assets") { Copy-Item "assets" "$pkg/assets" -Recurse }
+
+          $zipName = "YukarinetteXSOverlayBridge-${{ github.ref_name }}-windows.zip"
+          Compress-Archive -Path "$pkg/*" -DestinationPath $zipName -Force
+          echo "ZIP_NAME=$zipName" >> $env:GITHUB_ENV
+
+      - name: Create GitHub Release and upload asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ZIP_NAME }}
